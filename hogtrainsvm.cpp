@@ -1,3 +1,4 @@
+//train SVM
 #include <stdio.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -59,36 +60,27 @@ int main(int argc,char** argv)
      //set up SVM's parameters and train it
      cout<<"Putting Parameters.."<<endl;   
      Ptr<SVM> svm=SVM::create();
-     svm->setCoef0(0.0);
+     svm->setType(SVM::C_SVC);//C_SVC
+     svm->setCoef0(0.5);
      svm->setDegree(3);
      svm->setGamma(0);
-     svm->setType(SVM::EPS_SVR);
+     //svm->setType(SVM::EPS_SVR);
      svm->setKernel(SVM::LINEAR);
-     TermCriteria criteria(CV_TERMCRIT_ITER+CV_TERMCRIT_EPS,1000,1e-3);
+     //TermCriteria criteria(CV_TERMCRIT_ITER+CV_TERMCRIT_EPS,1000,1e-3);
+     TermCriteria criteria(TermCriteria::MAX_ITER,10000,1e-6);
      svm->setTermCriteria(criteria);
-     svm->setNu(0.5);
-     svm->setP(0.1);
+     svm->setNu(0.8);
+     svm->setP(10);
      svm->setC(0.01);
 
+     //train the SVM
      cout<<"SVM Training.."<<endl;
      svm->train(PNDescriptor,ROW_SAMPLE,labels);
-     //const Ptr<TrainData> svmresult=TrainData::create(PNDescriptor,ROW_SAMPLE,labels);
-     //svm->trainAuto(svmresult);
-     //Ptr<StatModel> svmstat;
-     //bool svmbool=svmstat->StatModel::train(&svmresult,0);
-     //bool svmbool=svmstat->StatModel::train(PNDescriptor,ROW_SAMPLE,labels);
-     //cout<<svmbool; 
 
      //saving trained data
-     cout<<"Saving SVM xml now.."<<endl;
-     //FileStorage svmxml(argv[3],FileStorage::WRITE);
-     //svm->write(svmxml);
-     //svmxml.release();
-     //svmresult->save(argv[3]);
-     //svm->StatModel::save(argv[3]);
      svm->save(argv[3]);
      cout<<"Saved"<<endl;
-     //svm->release();
+
      return -1;
 }
 
