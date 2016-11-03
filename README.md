@@ -4,7 +4,7 @@ A project that detects specific objects in images/videos using an SVM on HOG fea
 # Source programs
 * hogtrainfeatures.cpp : Extracts HOG features from a given set of images and stores them in a .xml file.
 * hogtrainsvm.cpp : Uses the extracted HOG features and trains a SVM with them.
-* hogobjectdetect.cpp : Uses the trained SVM to detect objects in images/livefeed.
+* hogobjectdetect.cpp : Uses the trained SVM to detect objects in images/livefeed/videos.
 
 # Dependencies
 OpenCV (used version 3.0.1)
@@ -15,14 +15,17 @@ Code to be run in terminal
 ```ruby
 $ cd Object-Detection
 $ make train
-$ ./output /PathToDirectoryContainingPositiveImages/positive.xml
-$ ./output /PathToDirectoryContainingNegativeImages/negative.xml
+$ ./output /PathToDirectoryContainingPositiveImages/ positive.xml
+$ ./output /PathToDirectoryContainingNegativeImages/ negative.xml
 $ make svm
 $ ./output positive.xml negative.xml trainedsvm.xml
 $ make all
+# for detection in image
 $ ./output trainedsvm.xml /PathToTestImage
-# for livefeed detection
-$ ./output trainedsvm.xml 
+# for detection in livefeed
+$ ./output trainedsvm.xml
+# for detection in video
+$ ./output trainedsvm.xml /PathToTestVideo
 ```
 # Sample outputs
 
